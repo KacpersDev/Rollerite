@@ -35,7 +35,7 @@ public class TPAccept implements CommandExecutor {
             }
 
             if (Data.tpa.get(target.getUniqueId()) != null
-            && Data.tpa.get(target.getUniqueId()).contains(player.getUniqueId())) {
+            && !Data.tpa.get(target.getUniqueId()).contains(player.getUniqueId())) {
                 player.sendMessage(Color.translate("&c" + target.getName() + " has never sent a teleportation request."));
                 return false;
             }

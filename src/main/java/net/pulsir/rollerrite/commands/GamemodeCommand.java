@@ -22,26 +22,30 @@ public class GamemodeCommand implements CommandExecutor {
         if (args.length == 0) {
             sender.sendMessage(Color.translate("&cPlease specify gamemode, (creative, survival, spectator)"));
         } else {
-            GameMode gameMode = GameMode.valueOf(args[0].toUpperCase());
+            try {
+                GameMode gameMode = GameMode.valueOf(args[0].toUpperCase());
 
-            if (args.length == 1) {
-                if (!(sender instanceof Player player)) {
-                    sender.sendMessage(Color.translate("&cYou must be a player to give yourself a god mode"));
-                    return false;
+                if (args.length == 1) {
+                    if (!(sender instanceof Player player)) {
+                        sender.sendMessage(Color.translate("&cYou must be a player to give yourself a god mode"));
+                        return false;
+                    }
+
+                    player.setGameMode(gameMode);
+                    player.sendMessage(Color.translate("&aSuccessfully updated gamemode " + gameMode));
+                } else {
+                    Player target = Bukkit.getPlayer(args[1]);
+
+                    if (target == null || !target.isOnline()) {
+                        sender.sendMessage(Color.translate("&cPlayer not found."));
+                        return false;
+                    }
+
+                    target.setGameMode(gameMode);
+                    sender.sendMessage(Color.translate("&aSuccessfully updated gamemode for " + target.getName() + " to " + gameMode));
                 }
-
-                player.setGameMode(gameMode);
-                player.sendMessage(Color.translate("&aSuccessfully updated gamemode " + gameMode));
-            } else {
-                Player target = Bukkit.getPlayer(args[1]);
-
-                if (target == null || !target.isOnline()) {
-                    sender.sendMessage(Color.translate("&cPlayer not found."));
-                    return false;
-                }
-
-                target.setGameMode(gameMode);
-                sender.sendMessage(Color.translate("&aSuccessfully updated gamemode for " + target.getName() + " to " + gameMode));
+            } catch (IllegalArgumentException e) {
+                sender.sendMessage(Color.translate("&cPlease specify gamemode, (creative, survival, spectator)"));
             }
         }
 

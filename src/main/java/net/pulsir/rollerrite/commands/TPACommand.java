@@ -38,6 +38,12 @@ public class TPACommand implements CommandExecutor {
                 return false;
             }
 
+            if (Data.tpa.containsKey(player.getUniqueId())
+            && Data.tpa.get(player.getUniqueId()).contains(target.getUniqueId())) {
+                player.sendMessage(Color.translate("&cYou have already sent a teleportation request to "  + target.getName()));
+                return false;
+            }
+
             if (!Data.tpa.containsKey(player.getUniqueId())) {
                 List<UUID> uuids = new ArrayList<>();
                 uuids.add(target.getUniqueId());
