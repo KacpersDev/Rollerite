@@ -1,0 +1,10 @@
+name: Rollerrite-main
+version: '${version}'
+main: net.pulsir.rollerrite.Rollerrite
+api-version: '1.21'
+commands:
+  god:
+  gamemode:
+  enderchest:
+  tpaaccept:
+  tpa:
